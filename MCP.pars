@@ -1,0 +1,9 @@
+SIGMAZ 0.03  		# Photometric redshift dispersion we want to consider for the survey.
+MINHALOMASS 113		# Minimum halo mass that the halo catalogue is cut to.
+MATCHING  yes		# Specify if you want to match or not. (yes/no)
+MATCHMETHODE  CM	# Type of matching you want to perform in the catalogues (options: CM -cilindrical matching-, FCM -FoF+Cilindrical Matching- and none)
+MATCHDIRECTION H2D 	# Direction to which you want to perform the matching in case you select yes in MATCHING (Options H2D -Haloes to Detections- or D2H -Detections to haloes-)
+PRINTPROCESS yes	# If set to yes, it will print the iteration step in steps of 100 to track where the program is.
+COMPPUR  yes		# Option to compute and plot the completeness and purity rates for the specified bins before. You can also do first the matching and second the completeness/purity plots.
+NBINSZ 10    		# Number of bins in redshift considered to compute the completeness and purity plots
+NBINSM 12    		# Number of bins in mass considered to compute the completeness and purity plots
