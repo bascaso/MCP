@@ -33,27 +33,31 @@ sigmaz=float(valor[0])
 #Which limit in Halo mass your catalogues have?
 minhalomass=valor[1]
 
+#Which limit in Detection SNR your catalogues have?
+minsnr=valor[2]
+
 # Are you mathing?
-matching=valor[2]
+matching=valor[3]
 
 # If so, with which method?
-matchMethode=valor[3]
+matchMethode=valor[4]
 
 # If so, which direction?
-matchDirection=valor[4]
+matchDirection=valor[5]
 #name=str(int(name))
 
 # If so, do you want to print on the screen the tracking iterations?
-printprocess=valor[5]
+printprocess=valor[6]
 #name=str(int(name))
 
 # Do you want to compute completeness and purity?
-comppur=valor[6]
-nbinsz=int(valor[7])
-nbinsm=int(valor[8])
+comppur=valor[7]
+nbinsz=int(valor[8])
+nbinsm=int(valor[9])
 
 
 print 'MINHALOMASS= ',minhalomass
+print 'MINSNR= ',minsnr
 print 'MATCHING= ',matching
 print 'METHODE= ',matchMethode
 print 'DIRECTION= ',matchDirection
@@ -64,11 +68,11 @@ print 'DIRECTION= ',matchDirection
 
 
 if matching == 'yes':
-    nameMatch = 'Match_'+matchMethode+'_'+matchDirection+'_'+minhalomass+'.txt'
+    nameMatch = 'Match_'+matchMethode+'_'+matchDirection+'_'+minhalomass+'_'+minsnr+'snr.txt'
 
 if comppur == 'yes':
-    nameComp = 'Completeness_'+matchMethode+'_'+minhalomass
-    namePur = 'Purity_'+matchMethode+'_'+minhalomass
+    nameComp = 'Completeness_'+matchMethode+'_'+minhalomass+'_'+minsnr+'snr'
+    namePur = 'Purity_'+matchMethode+'_'+minhalomass+'_'+minsnr+'snr'
 
 ####################
 
@@ -79,11 +83,11 @@ if matching == 'yes' and matchMethode == 'CM':
 
     if matchDirection == 'H2D':
 
-        idi,rai,deci,zi,ngali,richi,idf,raf,decf,zf,ngalf,richf,disti,rad=M.matchC('haloes_mock_'+minhalomass+'.txt','detection_mock.txt',sigmaz=sigmaz,printprocess=printprocess)
+        idi,rai,deci,zi,ngali,richi,idf,raf,decf,zf,ngalf,richf,disti,rad=M.matchC('haloes_mock_'+minhalomass+'.txt','detection_mock_'+minsnr+'snr.txt',sigmaz=sigmaz,printprocess=printprocess)
 
     if matchDirection == 'D2H':
         
-        idi,rai,deci,zi,ngali,richi,idf,raf,decf,zf,ngalf,richf,disti,rad=M.matchC('detection_mock.txt','haloes_mock_'+minhalomass+'.txt',sigmaz=sigmaz,printprocess=printprocess)
+        idi,rai,deci,zi,ngali,richi,idf,raf,decf,zf,ngalf,richf,disti,rad=M.matchC('detection_mock_'+minsnr+'snr.txt','haloes_mock_'+minhalomass+'.txt',sigmaz=sigmaz,printprocess=printprocess)
 
        
     # Print the results into a file
@@ -95,17 +99,24 @@ if matching == 'yes' and matchMethode == 'CM':
 
     f.close()
 
+    if printprocess == 'yes':
+        print 'MINHALOMASS= ',minhalomass
+        print 'MINSNR= ',minsnr
+        print 'MATCHING= ',matching
+        print 'METHODE= ',matchMethode
+        print 'DIRECTION= ',matchDirection
+
 #Match using FoF+cilindrical matching 
 
 if matching == 'yes' and matchMethode == 'FCM':
 
     if matchDirection == 'H2D':
         
-        idi,rai,deci,zi,ngali,richi,idf,raf,decf,zf,ngalf,richf,disti,rad=M.matchFC('haloes_mock_'+minhalomass+'.txt','detection_mock.txt',sigmaz=sigmaz,printprocess=printprocess)
+        idi,rai,deci,zi,ngali,richi,idf,raf,decf,zf,ngalf,richf,disti,rad=M.matchFC('haloes_mock_'+minhalomass+'.txt','detection_mock_'+minsnr+'snr.txt',sigmaz=sigmaz,printprocess=printprocess)
 
     if matchDirection == 'D2H':
         
-        idi,rai,deci,zi,ngali,richi,idf,raf,decf,zf,ngalf,richf,disti,rad=M.matchFC('detection_mock.txt','haloes_mock_'+minhalomass+'.txt',sigmaz=sigmaz,printprocess=printprocess)
+        idi,rai,deci,zi,ngali,richi,idf,raf,decf,zf,ngalf,richf,disti,rad=M.matchFC('detection_mock_'+minsnr+'snr.txt','haloes_mock_'+minhalomass+'.txt',sigmaz=sigmaz,printprocess=printprocess)
 
     # Print the results into a file
     f = open(nameMatch,'w')
@@ -115,6 +126,13 @@ if matching == 'yes' and matchMethode == 'FCM':
     	f.write(columnnew+"\n")
 
     f.close()
+
+    if printprocess == 'yes':
+        print 'MINHALOMASS= ',minhalomass
+        print 'MINSNR= ',minsnr
+        print 'MATCHING= ',matching
+        print 'METHODE= ',matchMethode
+        print 'DIRECTION= ',matchDirection
 
 
 # Compute completeness and purity from the previous matchings
